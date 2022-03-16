@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-mqtt="http://www.springframework.org/schema/integration/mqtt"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/integration  http://www.springframework.org/schema/integration/spring-integration.xsd
+       http://www.springframework.org/schema/integration/mqtt  http://www.springframework.org/schema/integration/mqtt/spring-integration-mqtt.xsd
+">
+        <bean class="org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory" id="clientFactory">
+        <property name="connectionOptions">
+            <bean class="org.eclipse.paho.client.mqttv3.MqttConnectOptions">
+                <property name="userName" value="${mqtt.user}"/>
+                <property name="password" value="${mqtt.password}"/>
+                <property name="keepAliveInterval" value="${mqtt.keepAliveInterval}"/>
+                <property name="serverURIs">
+                    <array>
+                        <value>${mqtt.serverURI1}</value>
+                    </array>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <bean class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler" id="mqttHandler">
+        <constructor-arg name="clientFactory" ref="clientFactory"/>
+        <constructor-arg name="clientId" value="${mqtt.default.client.id}"/>
+    </bean>
+    <int:channel id="mqttInputChannel"/>
+    <int-mqtt:message-driven-channel-adapter
+            client-id="mqtt_bound_in" id="mqttInbound"
+            qos="1" client-factory="clientFactory"
+            auto-startup="true" send-timeout="10"
+            channel="mqttInputChannel" topics="${mqtt.topic.device}"/>
+    <int:service-activator id="mqttActivator" input-channel="mqttInputChannel" ref="mqttService"/>
+</beans>
