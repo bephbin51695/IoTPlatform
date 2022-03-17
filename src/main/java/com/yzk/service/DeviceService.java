@@ -13,4 +13,6 @@ public interface DeviceService {
     List<Device> getByOwnerId(Integer id);
 
     PageInfo<Device> getPage(Integer currentPage, Integer pageSize);
+
+    Boolean modifyById(Device device);
 }

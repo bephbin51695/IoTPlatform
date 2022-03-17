@@ -39,4 +39,9 @@ public class DeviceServiceImpl implements DeviceService {
         PageInfo<Device> pageInfo = new PageInfo<>(deviceList);
         return pageInfo;
     }
+
+    @Override
+    public Boolean modifyById(Device device) {
+        return deviceMapper.modifyById(device)>0;
+    }
 }

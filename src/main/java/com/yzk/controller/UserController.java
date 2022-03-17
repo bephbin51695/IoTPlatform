@@ -15,6 +15,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public R getAll(){
+        return new R(true,userService.getAll());
+    }
+
     @GetMapping("{currentPage}/{pageSize}")
     public R getPage(@PathVariable Integer currentPage, @PathVariable Integer pageSize) {
         return new R(true, userService.getAllByPage(currentPage, pageSize));
@@ -48,9 +53,7 @@ public class UserController {
     }
 
     @PutMapping
-    public R modify(@RequestBody User u, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        u.setId(user.getId());
+    public R modify(@RequestBody User u) {
         Boolean modify = userService.modify(u);
         return modify ? new R(true, userService.getById(u.getId())) : new R("修改失败");
     }

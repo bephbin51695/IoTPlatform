@@ -4,6 +4,7 @@ import com.yzk.domain.Device;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -23,4 +24,7 @@ public interface DeviceMapper {
 
     @Insert("insert into device values(#{id},#{currentTemperature},#{setLowTemperature},#{setHighTemperature},#{ownerId},#{room},#{deviceId})")
     Integer addDevice(Device device);
+
+    @Update("update device set currentTemperature=#{currentTemperature}, setLowTemperature=#{setLowTemperature}, setHighTemperature=#{setHighTemperature}, ownerId=#{ownerId}, room=#{room}  where id=#{id}")
+    Integer modifyById(Device device);
 }
