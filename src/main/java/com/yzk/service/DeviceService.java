@@ -15,4 +15,10 @@ public interface DeviceService {
     PageInfo<Device> getPage(Integer currentPage, Integer pageSize);
 
     Boolean modifyById(Device device);
+
+    //bind
+    Boolean modifyOwnerIdByDeviceId(String deviceId, Integer ownerId);
+
+    //unbind
+    Boolean modifyOwnerIdByDeviceId(String deviceId);
 }

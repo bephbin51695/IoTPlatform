@@ -34,7 +34,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public PageInfo<Device> getPage(Integer currentPage, Integer pageSize) {
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         List<Device> deviceList = deviceMapper.getAllByPage();
         PageInfo<Device> pageInfo = new PageInfo<>(deviceList);
         return pageInfo;
@@ -42,6 +42,18 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public Boolean modifyById(Device device) {
-        return deviceMapper.modifyById(device)>0;
+        return deviceMapper.modifyById(device) > 0;
+    }
+
+    @Override
+    public Boolean modifyOwnerIdByDeviceId(String deviceId, Integer ownerId) {
+        Integer masterId = deviceMapper.getByDeviceId(deviceId).getOwnerId();
+        if (masterId == null) return deviceMapper.addOwnerIdByDeviceId(deviceId, ownerId) > 0;
+        return false;
+    }
+
+    @Override
+    public Boolean modifyOwnerIdByDeviceId(String deviceId) {
+        return deviceMapper.removeOwnerIdByDeviceId(deviceId) > 0;
     }
 }

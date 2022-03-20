@@ -30,6 +30,7 @@ public class MqttServiceImpl implements MqttService {
         System.out.println("topic:"+topic);
     }
 
+    //TODO
     @Override
     public void sendMessage(Device device) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
