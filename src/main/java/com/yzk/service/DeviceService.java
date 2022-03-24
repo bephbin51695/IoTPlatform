@@ -1,12 +1,13 @@
 package com.yzk.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageInfo;
 import com.yzk.domain.Device;
 
 import java.util.List;
 
 public interface DeviceService {
-    Device getById(Integer id);
+    Device getByDeviceId(String deviceId);
 
     List<Device> getAll();
 
@@ -14,7 +15,13 @@ public interface DeviceService {
 
     PageInfo<Device> getPage(Integer currentPage, Integer pageSize);
 
-    Boolean modifyById(Device device);
+    Boolean add(Device device);
+
+    Boolean renewCurrentTemperature(Device device);
+
+    Boolean remove(Integer id);
+
+    Boolean modifyById(Device device) throws JsonProcessingException;
 
     //bind
     Boolean modifyOwnerIdByDeviceId(String deviceId, Integer ownerId);

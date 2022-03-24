@@ -6,20 +6,30 @@ public class Device {
     private String currentTemperature;
     private String setLowTemperature;
     private String setHighTemperature;
+    private String targetTemperature;
     private Integer ownerId;
     private String room;
 
     @Override
     public String toString() {
         return "Device{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", deviceId='" + deviceId + '\'' +
                 ", currentTemperature='" + currentTemperature + '\'' +
                 ", setLowTemperature='" + setLowTemperature + '\'' +
                 ", setHighTemperature='" + setHighTemperature + '\'' +
+                ", targetTemperature='" + targetTemperature + '\'' +
                 ", ownerId=" + ownerId +
                 ", room='" + room + '\'' +
                 '}';
+    }
+
+    public String getTargetTemperature() {
+        return targetTemperature;
+    }
+
+    public void setTargetTemperature(String targetTemperature) {
+        this.targetTemperature = targetTemperature;
     }
 
     public String getDeviceId() {

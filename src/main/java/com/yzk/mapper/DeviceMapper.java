@@ -22,10 +22,16 @@ public interface DeviceMapper {
     @Select("select * from device")
     List<Device> getAllByPage();
 
-    @Insert("insert into device values(#{id},#{currentTemperature},#{setLowTemperature},#{setHighTemperature},#{ownerId},#{room},#{deviceId})")
+    @Insert("insert into device values(#{id},#{currentTemperature},#{setLowTemperature},#{setHighTemperature},#{ownerId},#{room},#{deviceId},#{targetTemperature})")
     Integer addDevice(Device device);
 
-    @Update("update device set currentTemperature=#{currentTemperature}, setLowTemperature=#{setLowTemperature}, setHighTemperature=#{setHighTemperature}, ownerId=#{ownerId}, room=#{room}  where id=#{id}")
+    @Update("update device set currentTemperature=#{currentTemperature} where deviceId=#{deviceId}")
+    Integer renewCurrentTemperature(Device device);
+
+    @Delete("delete from device where id=#{id}")
+    Integer deleteDevice(Integer id);
+
+    @Update("update device set setLowTemperature=#{setLowTemperature}, setHighTemperature=#{setHighTemperature}, targetTemperature=#{targetTemperature}, ownerId=#{ownerId}, room=#{room}  where id=#{id}")
     Integer modifyById(Device device);
 
     @Update("update device set ownerId=#{ownerId} where deviceId=#{deviceId}")

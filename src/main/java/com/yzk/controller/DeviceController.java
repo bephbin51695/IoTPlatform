@@ -34,16 +34,20 @@ public class DeviceController {
         return new R(true, deviceService.getPage(currentPage, pageSize));
     }
 
-    //TODO
-    @GetMapping("/mqtt/{id}")
-    public R mqttSend(@PathVariable Integer id) throws JsonProcessingException {
-        Device device = deviceService.getById(id);
-        mqttService.sendMessage(device);
-        return new R(true);
+    @PostMapping
+    public R add(@RequestBody Device device) {
+        Boolean flag = deviceService.add(device);
+        return flag ? new R(true) : new R("添加设备失败");
+    }
+
+    @DeleteMapping("{id}")
+    public R remove(@PathVariable Integer id) {
+        Boolean flag = deviceService.remove(id);
+        return flag ? new R(true) : new R("删除设备失败");
     }
 
     @PutMapping
-    public R modify(@RequestBody Device device) {
+    public R modify(@RequestBody Device device) throws JsonProcessingException {
         Boolean flag = deviceService.modifyById(device);
         return flag ? new R(true) : new R("修改失败");
     }
