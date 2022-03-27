@@ -3,6 +3,7 @@ package com.yzk.domain;
 public class User {
     private Integer id;
     private String username;
+    private String nickname;
     private String password;
     private String email;
     private String phone;
@@ -12,10 +13,19 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public Integer getId() {

@@ -53,14 +53,14 @@ public class UserController {
 
     @PutMapping
     public R modify(@RequestBody User u) {
-        Boolean flag = userService.modify(u);
+        boolean flag = userService.modify(u);
         return flag ? new R(true, userService.getById(u.getId())) : new R("修改失败");
     }
 
     @DeleteMapping("{id}")
     public R delete(@PathVariable Integer id) {
-        Boolean delete = userService.delete(id);
-        if (delete) {
+        boolean flag = userService.delete(id);
+        if (flag) {
             return new R(true);
         }
         return new R("删除失败");

@@ -32,31 +32,31 @@ public class DeviceController {
 
     @PostMapping
     public R add(@RequestBody Device device) {
-        Boolean flag = deviceService.add(device);
+        boolean flag = deviceService.add(device);
         return flag ? new R(true) : new R("添加设备失败");
     }
 
     @DeleteMapping("{id}")
     public R remove(@PathVariable Integer id) {
-        Boolean flag = deviceService.remove(id);
+        boolean flag = deviceService.remove(id);
         return flag ? new R(true) : new R("删除设备失败");
     }
 
     @PutMapping
     public R modify(@RequestBody Device device) {
-        Boolean flag = deviceService.modifyById(device);
+        boolean flag = deviceService.modifyById(device);
         return flag ? new R(true) : new R("修改失败");
     }
 
     @PutMapping("{deviceId}/{ownerId}")
     public R bindDevice4User(@PathVariable("deviceId") String deviceId, @PathVariable("ownerId") Integer ownerId) {
-        Boolean flag = deviceService.modifyOwnerIdByDeviceId(deviceId, ownerId);
+        boolean flag = deviceService.modifyOwnerIdByDeviceId(deviceId, ownerId);
         return flag ? new R(true, deviceService.getByOwnerId(ownerId)) : new R("用户绑定设备失败");
     }
 
     @DeleteMapping("{deviceId}/{ownerId}")
     public R unbindDevice4User(@PathVariable("deviceId") String deviceId, @PathVariable("ownerId") Integer ownerId) {
-        Boolean flag = deviceService.modifyOwnerIdByDeviceId(deviceId);
+        boolean flag = deviceService.modifyOwnerIdByDeviceId(deviceId);
         return flag ? new R(true, deviceService.getByOwnerId(ownerId)) : new R("用户解绑设备失败");
     }
 

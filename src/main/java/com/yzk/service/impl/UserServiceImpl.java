@@ -24,17 +24,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean signup(User user) {
+        if(userMapper.getCount(user) > 0){
+            return false;
+        }
         return userMapper.addUser(user) > 0;
     }
 
     @Override
     public Boolean modify(User user) {
-        return userMapper.modifyUser(user)>0;
+        return userMapper.modifyUser(user) > 0;
     }
 
     @Override
     public Boolean delete(Integer id) {
-        return userMapper.deleteUser(id)>0;
+        return userMapper.deleteUser(id) > 0;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageInfo<User> getAllByPage(Integer currentPage, Integer pageSize) {
-        PageHelper.startPage(currentPage,pageSize);
+        PageHelper.startPage(currentPage, pageSize);
         List<User> userList = userMapper.getUserByPage();
         PageInfo<User> pageInfo = new PageInfo<>(userList);
         return pageInfo;

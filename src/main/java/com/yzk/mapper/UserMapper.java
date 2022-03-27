@@ -10,6 +10,9 @@ public interface UserMapper {
     @Select("select * from user")
     List<User> getAll();
 
+    @Select("select count(*) from user where username=#{username}")
+    Integer getCount(User user);
+
     @Select("select * from user where id=#{id}")
     User getById(Integer id);
 
@@ -22,10 +25,10 @@ public interface UserMapper {
     @Select("select * from user")
     List<User> getUserByPage();
 
-    @Insert("insert into user values (#{id},#{username},#{password},#{email},#{phone})")
+    @Insert("insert into user values (#{id},#{username},#{password},#{email},#{phone},#{nickname})")
     Integer addUser(User user);
 
-    @Update("update user set username=#{username},password=#{password},email=#{email},phone=#{phone} where id=#{id}")
+    @Update("update user set username=#{username},password=#{password},email=#{email},phone=#{phone},nickname=#{nickname}} where id=#{id}")
     Integer modifyUser(User user);
 
     @Delete("delete from user where id=#{id}")

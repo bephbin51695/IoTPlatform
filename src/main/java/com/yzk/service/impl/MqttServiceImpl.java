@@ -34,7 +34,6 @@ public class MqttServiceImpl implements MqttService {
             deviceService.renewCurrentTemperature(device);
             System.out.println("temperature updated:" + device.getDeviceId());
         }
-        System.out.println("topic:" + topic);
     }
 
     @Override
