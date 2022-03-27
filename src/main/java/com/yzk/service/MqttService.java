@@ -11,5 +11,5 @@ public interface MqttService {
     @ServiceActivator(inputChannel = "mqttInputChannel")
     void receiveMessage(String message, @Header(MqttHeaders.TOPIC) String topic) throws JsonProcessingException;
 
-    void sendMessage(Device device) throws JsonProcessingException;
+    void sendMessage(Device device);
 }

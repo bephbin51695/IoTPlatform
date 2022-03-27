@@ -4,8 +4,6 @@ public class Device {
     private Integer id;
     private String deviceId;
     private String currentTemperature;
-    private String setLowTemperature;
-    private String setHighTemperature;
     private String targetTemperature;
     private Integer ownerId;
     private String room;
@@ -16,8 +14,6 @@ public class Device {
                 "id=" + id +
                 ", deviceId='" + deviceId + '\'' +
                 ", currentTemperature='" + currentTemperature + '\'' +
-                ", setLowTemperature='" + setLowTemperature + '\'' +
-                ", setHighTemperature='" + setHighTemperature + '\'' +
                 ", targetTemperature='" + targetTemperature + '\'' +
                 ", ownerId=" + ownerId +
                 ", room='" + room + '\'' +
@@ -54,22 +50,6 @@ public class Device {
 
     public void setCurrentTemperature(String currentTemperature) {
         this.currentTemperature = currentTemperature;
-    }
-
-    public String getSetLowTemperature() {
-        return setLowTemperature;
-    }
-
-    public void setSetLowTemperature(String setLowTemperature) {
-        this.setLowTemperature = setLowTemperature;
-    }
-
-    public String getSetHighTemperature() {
-        return setHighTemperature;
-    }
-
-    public void setSetHighTemperature(String setHighTemperature) {
-        this.setHighTemperature = setHighTemperature;
     }
 
     public Integer getOwnerId() {

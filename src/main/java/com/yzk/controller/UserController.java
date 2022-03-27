@@ -6,7 +6,6 @@ import com.yzk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -16,8 +15,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public R getAll(){
-        return new R(true,userService.getAll());
+    public R getAll() {
+        return new R(true, userService.getAll());
     }
 
     @GetMapping("{currentPage}/{pageSize}")
@@ -54,12 +53,12 @@ public class UserController {
 
     @PutMapping
     public R modify(@RequestBody User u) {
-        Boolean modify = userService.modify(u);
-        return modify ? new R(true, userService.getById(u.getId())) : new R("修改失败");
+        Boolean flag = userService.modify(u);
+        return flag ? new R(true, userService.getById(u.getId())) : new R("修改失败");
     }
 
     @DeleteMapping("{id}")
-    public R delete(@PathVariable Integer id, ServletContext context) {
+    public R delete(@PathVariable Integer id) {
         Boolean delete = userService.delete(id);
         if (delete) {
             return new R(true);

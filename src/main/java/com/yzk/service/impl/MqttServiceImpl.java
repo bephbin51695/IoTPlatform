@@ -1,6 +1,5 @@
 package com.yzk.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yzk.domain.Device;
@@ -38,17 +37,11 @@ public class MqttServiceImpl implements MqttService {
         System.out.println("topic:" + topic);
     }
 
-    //TODO
     @Override
-    public void sendMessage(Device device) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        Device data = new Device();
-        data.setDeviceId(device.getDeviceId());
-        data.setTargetTemperature(device.getTargetTemperature());
-        String json = mapper.writeValueAsString(data);
-        Message<String> message = MessageBuilder.withPayload(json).setHeader(MqttHeaders.TOPIC, "ssm/setting/" + device.getDeviceId()).build();
-        System.out.println(json);
+    public void sendMessage(Device device) {
+        String data = "SetTemp:" + device.getTargetTemperature();
+        Message<String> message = MessageBuilder.withPayload(data).setHeader(MqttHeaders.TOPIC, "ssm/setting/" + device.getDeviceId()).build();
+        System.out.println(data);
         mqttHandler.handleMessage(message);
     }
 

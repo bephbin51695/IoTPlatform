@@ -1,6 +1,5 @@
 package com.yzk.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageInfo;
 import com.yzk.domain.Device;
 
@@ -21,7 +20,7 @@ public interface DeviceService {
 
     Boolean remove(Integer id);
 
-    Boolean modifyById(Device device) throws JsonProcessingException;
+    Boolean modifyById(Device device);
 
     //bind
     Boolean modifyOwnerIdByDeviceId(String deviceId, Integer ownerId);

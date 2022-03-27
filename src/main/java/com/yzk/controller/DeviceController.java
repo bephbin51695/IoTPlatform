@@ -1,10 +1,8 @@
 package com.yzk.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.yzk.domain.Device;
 import com.yzk.domain.R;
 import com.yzk.service.DeviceService;
-import com.yzk.service.MqttService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +13,6 @@ import java.util.List;
 public class DeviceController {
     @Autowired
     private DeviceService deviceService;
-    @Autowired
-    private MqttService mqttService;
 
     @GetMapping
     public R getAll() {
@@ -47,7 +43,7 @@ public class DeviceController {
     }
 
     @PutMapping
-    public R modify(@RequestBody Device device) throws JsonProcessingException {
+    public R modify(@RequestBody Device device) {
         Boolean flag = deviceService.modifyById(device);
         return flag ? new R(true) : new R("修改失败");
     }

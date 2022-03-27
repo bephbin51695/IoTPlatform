@@ -1,6 +1,5 @@
 package com.yzk.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yzk.domain.Device;
@@ -62,7 +61,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Boolean modifyById(Device device) throws JsonProcessingException {
+    public Boolean modifyById(Device device) {
         Device temp = deviceMapper.getById(device.getId());
         if (!Objects.equals(temp.getTargetTemperature(), device.getTargetTemperature())) {
             mqttService.sendMessage(device);

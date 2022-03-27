@@ -22,7 +22,7 @@
             </bean>
         </property>
     </bean>
-    <bean class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler" id="mqttHandler">
+    <bean class="org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler" id="mqttHandler" destroy-method="stop">
         <constructor-arg name="clientFactory" ref="clientFactory"/>
         <constructor-arg name="clientId" value="${mqtt.default.client.id}"/>
     </bean>
