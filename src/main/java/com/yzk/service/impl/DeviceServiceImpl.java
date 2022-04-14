@@ -63,6 +63,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public Boolean modifyById(Device device) {
         Device temp = deviceMapper.getById(device.getId());
+        device.setDeviceId(temp.getDeviceId());
         if (!Objects.equals(temp.getTargetTemperature(), device.getTargetTemperature())) {
             mqttService.sendMessage(device);
         }
