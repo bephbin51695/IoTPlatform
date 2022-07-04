@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@Transactional
 public class DeviceServiceImpl implements DeviceService {
     @Autowired
     private DeviceMapper deviceMapper;
@@ -61,6 +60,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public Boolean modifyById(Device device) {
         Device temp = deviceMapper.getById(device.getId());
         device.setDeviceId(temp.getDeviceId());
@@ -71,6 +71,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public Boolean modifyOwnerIdByDeviceId(String deviceId, Integer ownerId) {
         Integer masterId = deviceMapper.getByDeviceId(deviceId).getOwnerId();
         if (masterId == null) return deviceMapper.addOwnerIdByDeviceId(deviceId, ownerId) > 0;
