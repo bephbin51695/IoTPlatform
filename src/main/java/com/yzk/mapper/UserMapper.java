@@ -2,6 +2,7 @@ package com.yzk.mapper;
 
 import com.yzk.domain.User;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.StatementType;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public interface UserMapper {
     List<User> getUserByPage();
 
     @Insert("insert into user values (#{id},#{username},#{password},#{email},#{phone},#{nickname})")
+    @SelectKey(before = false, keyProperty = "id", statement = "SELECT LAST_INSERT_ID() AS id", resultType = Integer.class, statementType = StatementType.STATEMENT)
     Integer addUser(User user);
 
     @Update("update user set username=#{username},password=#{password},email=#{email},phone=#{phone},nickname=#{nickname}} where id=#{id}")

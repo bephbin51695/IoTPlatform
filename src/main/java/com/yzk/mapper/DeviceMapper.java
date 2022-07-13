@@ -2,6 +2,7 @@ package com.yzk.mapper;
 
 import com.yzk.domain.Device;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.StatementType;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public interface DeviceMapper {
     List<Device> getAllByPage();
 
     @Insert("insert into device values(#{id},#{currentTemperature},#{ownerId},#{room},#{deviceId},#{targetTemperature})")
+    @SelectKey(before = false, keyProperty = "id", statement = "SELECT LAST_INSERT_ID() AS id", resultType = Integer.class, statementType = StatementType.STATEMENT)
     Integer addDevice(Device device);
 
     @Update("update device set currentTemperature=#{currentTemperature} where deviceId=#{deviceId}")
