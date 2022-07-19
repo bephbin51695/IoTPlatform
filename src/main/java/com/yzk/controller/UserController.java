@@ -66,4 +66,9 @@ public class UserController {
         return new R("删除失败");
     }
 
+    @PutMapping("{id}")
+    public R reset(@PathVariable Integer id) {
+        return userService.reset(id) ? new R(true) : new R("重置失败");
+    }
+
 }

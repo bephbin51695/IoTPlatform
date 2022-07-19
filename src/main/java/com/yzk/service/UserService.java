@@ -14,6 +14,8 @@ public interface UserService {
 
     Boolean delete(Integer id);
 
+    Boolean reset(Integer id);
+
     List<User> getAll();
 
     User getByPhone(String phone);

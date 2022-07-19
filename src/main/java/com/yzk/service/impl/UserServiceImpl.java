@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean signup(User user) {
-        if(userMapper.getCount(user) > 0){
+        if (userMapper.getCount(user) > 0) {
             return false;
         }
         return userMapper.addUser(user) > 0;
@@ -38,6 +38,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean delete(Integer id) {
         return userMapper.deleteUser(id) > 0;
+    }
+
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public Boolean reset(Integer id) {
+        User user = userMapper.getById(id);
+        user.setPassword("10QPzm");
+        return userMapper.modifyUser(user) > 0;
     }
 
     @Override
