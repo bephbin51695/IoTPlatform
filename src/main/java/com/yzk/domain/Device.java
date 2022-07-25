@@ -1,6 +1,18 @@
 package com.yzk.domain;
 
-public class Device {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Device implements Serializable {
     private Integer id;
     private String deviceId;
     private String currentTemperature;
@@ -56,15 +68,4 @@ public class Device {
         return ownerId;
     }
 
-    public void setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
 }

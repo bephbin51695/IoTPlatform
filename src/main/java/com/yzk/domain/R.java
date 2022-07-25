@@ -1,13 +1,20 @@
 package com.yzk.domain;
 
-public class R {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class R implements Serializable {
     private Boolean flag;
     private Object data;
     private String msg;
-
-
-    public R() {
-    }
 
     public R(Boolean flag) {
         this.flag = flag;
@@ -23,36 +30,4 @@ public class R {
         this.msg = msg;
     }
 
-
-    @Override
-    public String toString() {
-        return "R{" +
-                "flag=" + flag +
-                ", data=" + data +
-                '}';
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Boolean getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Boolean flag) {
-        this.flag = flag;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
 }
