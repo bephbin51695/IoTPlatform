@@ -33,12 +33,12 @@ public interface DeviceMapper {
     @Delete("delete from device where id=#{id}")
     Integer deleteDevice(Integer id);
 
-    @Update("update device set targetTemperature=#{targetTemperature}, ownerId=#{ownerId}, room=#{room} where id=#{id}")
+    @Update("update device set targetTemperature=#{targetTemperature},ownerId=#{ownerId},room=#{room},update_time=now() where id=#{id}")
     Integer modifyById(Device device);
 
-    @Update("update device set ownerId=#{ownerId} where deviceId=#{deviceId}")
+    @Update("update device set ownerId=#{ownerId},update_time=now() where deviceId=#{deviceId}")
     Integer addOwnerIdByDeviceId(@Param("deviceId") String deviceId, @Param("ownerId") Integer ownerId);
 
-    @Update("update device set ownerId=null where deviceId=#{deviceId}")
+    @Update("update device set ownerId=null,update_time=now() where deviceId=#{deviceId}")
     Integer removeOwnerIdByDeviceId(String deviceId);
 }

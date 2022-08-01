@@ -29,6 +29,8 @@ CREATE TABLE `device` (
                           `room` varchar(40) DEFAULT NULL,
                           `deviceId` varchar(40) DEFAULT NULL,
                           `targetTemperature` char(10) DEFAULT NULL,
+                          `create_time` datetime DEFAULT now(),
+                          `update_time` datetime DEFAULT NULL,
                           PRIMARY KEY (`id`),
                           UNIQUE KEY `deviceId` (`deviceId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -58,6 +60,8 @@ CREATE TABLE `user` (
                         `email` varchar(40) DEFAULT NULL,
                         `phone` char(11) DEFAULT NULL,
                         `nickname` varchar(40) DEFAULT NULL,
+                        `create_time` datetime DEFAULT now(),
+                        `update_time` datetime DEFAULT NULL,
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

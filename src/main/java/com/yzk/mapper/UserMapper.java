@@ -30,7 +30,7 @@ public interface UserMapper {
     @SelectKey(before = false, keyProperty = "id", statement = "SELECT LAST_INSERT_ID() AS id", resultType = Integer.class, statementType = StatementType.STATEMENT)
     Integer addUser(User user);
 
-    @Update("update user set username=#{username},password=#{password},email=#{email},phone=#{phone},nickname=#{nickname}} where id=#{id}")
+    @Update("update user set username=#{username},password=#{password},email=#{email},phone=#{phone},nickname=#{nickname},update_time=now() where id=#{id}")
     Integer modifyUser(User user);
 
     @Delete("delete from user where id=#{id}")
