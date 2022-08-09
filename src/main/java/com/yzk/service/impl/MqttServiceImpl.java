@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yzk.domain.Device;
 import com.yzk.service.DeviceService;
 import com.yzk.service.MqttService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
@@ -14,6 +15,7 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service("mqttService")
 public class MqttServiceImpl implements MqttService {
     @Autowired
@@ -29,10 +31,10 @@ public class MqttServiceImpl implements MqttService {
         Device query = deviceService.getByDeviceId(device.getDeviceId());
         if (query == null) {
             deviceService.add(device);
-            System.out.println("new device registered:" + device.getDeviceId());
+            log.info("Device registered,id:{}", device.getDeviceId());
         } else {
             deviceService.renewCurrentTemperature(device);
-            System.out.println("temperature updated:" + device.getDeviceId());
+            log.info("Device {} current temperature:{}", device.getDeviceId(), device.getCurrentTemperature());
         }
     }
 
@@ -40,7 +42,7 @@ public class MqttServiceImpl implements MqttService {
     public void sendMessage(Device device) {
         String data = "SetTemp:" + device.getTargetTemperature();
         Message<String> message = MessageBuilder.withPayload(data).setHeader(MqttHeaders.TOPIC, "ssm/setting/" + device.getDeviceId()).build();
-        System.out.println(data);
+        log.info("Device {} set temperature:{}", device.getDeviceId(), device.getTargetTemperature());
         mqttHandler.handleMessage(message);
     }
 
