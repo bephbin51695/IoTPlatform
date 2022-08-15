@@ -8,6 +8,8 @@ import java.util.List;
 public interface DeviceService {
     Device getByDeviceId(String deviceId);
 
+    Device getById(Integer id);
+
     List<Device> getAll();
 
     List<Device> getByOwnerId(Integer id);

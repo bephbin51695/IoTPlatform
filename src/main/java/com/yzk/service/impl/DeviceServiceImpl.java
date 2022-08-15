@@ -27,6 +27,11 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public Device getById(Integer id) {
+        return deviceMapper.getById(id);
+    }
+
+    @Override
     public List<Device> getAll() {
         return deviceMapper.getAll();
     }

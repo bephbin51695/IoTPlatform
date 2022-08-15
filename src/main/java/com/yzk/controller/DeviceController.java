@@ -33,7 +33,7 @@ public class DeviceController {
     @PostMapping
     public R add(@RequestBody Device device) {
         boolean flag = deviceService.add(device);
-        return flag ? new R(true) : new R("添加设备失败");
+        return flag ? new R(true, deviceService.getById(device.getId())) : new R("添加设备失败");
     }
 
     @DeleteMapping("{id}")

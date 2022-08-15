@@ -48,7 +48,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public R signup(@RequestBody User u) {
-        return userService.signup(u) ? new R(true) : new R("注册失败");
+        return userService.signup(u) ? new R(true, userService.getById(u.getId())) : new R("注册失败");
     }
 
     @PutMapping
