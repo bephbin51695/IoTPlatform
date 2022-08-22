@@ -31,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean modify(User user) {
+        if (userMapper.getCount(user) > 0) {
+            return false;
+        }
         return userMapper.modifyUser(user) > 0;
     }
 

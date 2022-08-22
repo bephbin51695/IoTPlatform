@@ -27,11 +27,11 @@ public class UserController {
     @PostMapping("/login")
     public R login(@RequestBody User u, HttpSession session) {
         User user = userService.login(u);
-        if (user != null) {
-            session.setAttribute("user", user);
-            return new R(true, user);
+        if (user == null) {
+            return new R("用户名或密码不正确");
         }
-        return new R("用户名或密码不正确");
+        session.setAttribute("user", user);
+        return new R(true, user);
     }
 
     @GetMapping("/logout")
