@@ -3,16 +3,22 @@ package com.yzk.controller;
 import com.yzk.domain.R;
 import com.yzk.domain.User;
 import com.yzk.service.UserService;
+import com.yzk.util.LocalStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private LocalStorage localStorage;
 
     @GetMapping
     public R getAll() {
@@ -25,18 +31,28 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public R login(@RequestBody User u, HttpSession session) {
+    public R login(@RequestBody User u, HttpSession session, HttpServletResponse response) {
         User user = userService.login(u);
         if (user == null) {
             return new R("用户名或密码不正确");
         }
         session.setAttribute("user", user);
+        Cookie cookie = new Cookie("token", UUID.randomUUID().toString().replaceAll("-", ""));
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 30);
+        localStorage.getLoginCookieMap().put(user.getUsername(), cookie);
+        response.addCookie(cookie);
         return new R(true, user);
     }
 
     @GetMapping("/logout")
-    public R logout(HttpSession session) {
+    public R logout(HttpSession session, HttpServletResponse response) {
+        User user = (User) session.getAttribute("user");
         session.invalidate();
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        localStorage.getLoginCookieMap().remove(user.getUsername());
         return new R(true);
     }
 
