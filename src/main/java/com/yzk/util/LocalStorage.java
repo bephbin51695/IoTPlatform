@@ -9,9 +9,7 @@ import java.util.HashMap;
 @Component
 @Data
 public class LocalStorage {
-    private HashMap<String, Cookie> loginCookieMap;
+    private HashMap<String, Cookie> loginCookieMap = new HashMap<>();
+    private HashMap<String, Long> loginAttemptMap = new HashMap<>();
 
-    LocalStorage() {
-        this.loginCookieMap = new HashMap<>();
-    }
 }
