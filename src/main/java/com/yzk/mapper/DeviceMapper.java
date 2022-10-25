@@ -23,7 +23,7 @@ public interface DeviceMapper {
     @Select("select * from device")
     List<Device> getAllByPage();
 
-    @Insert("insert into device values(#{id},#{currentTemperature},#{ownerId},#{room},#{deviceId},#{targetTemperature})")
+    @Insert("insert into device(currentTemperature, ownerId, room, deviceId, targetTemperature) values(#{currentTemperature},#{ownerId},#{room},#{deviceId},#{targetTemperature})")
     @SelectKey(before = false, keyProperty = "id", statement = "SELECT LAST_INSERT_ID() AS id", resultType = Integer.class, statementType = StatementType.STATEMENT)
     Integer addDevice(Device device);
 

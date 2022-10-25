@@ -26,7 +26,7 @@ public interface UserMapper {
     @Select("select * from user")
     List<User> getUserByPage();
 
-    @Insert("insert into user values (#{id},#{username},#{password},#{email},#{phone},#{nickname})")
+    @Insert("insert into user(username, password, email, phone, nickname) values (#{username},#{password},#{email},#{phone},#{nickname})")
     @SelectKey(before = false, keyProperty = "id", statement = "SELECT LAST_INSERT_ID() AS id", resultType = Integer.class, statementType = StatementType.STATEMENT)
     Integer addUser(User user);
 

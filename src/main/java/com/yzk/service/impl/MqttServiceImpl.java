@@ -3,7 +3,7 @@ package com.yzk.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yzk.domain.Device;
-import com.yzk.service.DeviceService;
+import com.yzk.mapper.DeviceMapper;
 import com.yzk.service.MqttService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +21,19 @@ public class MqttServiceImpl implements MqttService {
     @Autowired
     private MqttPahoMessageHandler mqttHandler;
     @Autowired
-    private DeviceService deviceService;
+    private DeviceMapper deviceMapper;
 
     @Override
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public void receiveMessage(String message, @Header("mqtt_receivedTopic") String topic) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Device device = mapper.readValue(message, Device.class);
-        Device query = deviceService.getByDeviceId(device.getDeviceId());
+        Device query = deviceMapper.getByDeviceId(device.getDeviceId());
         if (query == null) {
-            deviceService.add(device);
+            deviceMapper.addDevice(device);
             log.info("Device registered,id:{}", device.getDeviceId());
         } else {
-            deviceService.renewCurrentTemperature(device);
+            deviceMapper.renewCurrentTemperature(device);
             log.info("Device {} current temperature:{}", device.getDeviceId(), device.getCurrentTemperature());
         }
     }

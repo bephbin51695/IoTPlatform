@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://@ip@:3306/ssm
+    username: test
+    password: 1234
+  security:
+    user:
+      name: admin
+      password: admin
+
+mqtt:
+  username: admin
+  password: admin
+  keepAliveInterval: 30
+  url: tcp://@ip@:1883
+  client:
+    id: IoTPlatform
+  default:
+    topic: ssm/device/+
+logging:
+  file:
+    name: logs/IoT.log
+server:
+  port: 8081
