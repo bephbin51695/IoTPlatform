@@ -17,10 +17,10 @@ public class IoTApp {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/anonymous*")
+        http.authorizeHttpRequests()
+                .requestMatchers("/anonymous*")
                 .anonymous()
-                .antMatchers("/login*")
+                .requestMatchers("/login*")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

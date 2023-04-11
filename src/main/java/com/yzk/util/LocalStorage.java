@@ -1,9 +1,9 @@
 package com.yzk.util;
 
+import jakarta.servlet.http.Cookie;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.Cookie;
 import java.util.HashMap;
 
 @Component
