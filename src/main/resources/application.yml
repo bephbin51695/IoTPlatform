@@ -11,7 +11,8 @@ spring:
 mqtt:
   username: admin
   password: admin
-  keepAliveInterval: 30
+  keepalive-interval: 30
+  connection-timeout: 5
   url: tcp://@ip@:1883
   client:
     id: IoTPlatform

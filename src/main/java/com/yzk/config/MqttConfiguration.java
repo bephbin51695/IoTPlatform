@@ -28,8 +28,10 @@ public class MqttConfiguration {
     private String username;
     @Value("${mqtt.password}")
     private String password;
-    @Value("${mqtt.keepAliveInterval}")
-    private Integer keepAliveInterval;
+    @Value("${mqtt.keepalive-interval}")
+    private Integer keepaliveInterval;
+    @Value("${mqtt.connection-timeout}")
+    private Integer connectionTimeout;
 
     @Bean
     public MqttPahoClientFactory clientFactory() {
@@ -38,7 +40,8 @@ public class MqttConfiguration {
         options.setServerURIs(new String[]{url});
         options.setUserName(username);
         options.setPassword(password.toCharArray());
-        options.setKeepAliveInterval(keepAliveInterval);
+        options.setKeepAliveInterval(keepaliveInterval);
+        options.setConnectionTimeout(connectionTimeout);
         factory.setConnectionOptions(options);
         return factory;
     }
