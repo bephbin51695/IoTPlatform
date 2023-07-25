@@ -1,4 +1,4 @@
-# IoT Platform
+# IoT Platform - Java Backend
 
 ![license](https://img.shields.io/github/license/bephbin51695/IoTPlatform)
 ![workflow](https://github.com/bephbin51695/IoTPlatform/actions/workflows/maven_ci.yml/badge.svg)
@@ -12,7 +12,7 @@ based on thermostats, and realizes the real-time remote configuration of IoT ter
 - DB: MySQL 8.0.33
 - WEB Server: Nginx 1.24.0
 - JDK Version: 17
-- Spring Boot Version: 3.1.0
+- Spring Boot Version: 3.1.2
 - MQTT Broker: HiveMQ CE 2021.3
 
 ## Acknowledgments
