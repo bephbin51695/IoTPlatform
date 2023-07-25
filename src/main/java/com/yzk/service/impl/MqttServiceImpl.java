@@ -22,12 +22,13 @@ public class MqttServiceImpl implements MqttService {
     private MqttPahoMessageHandler mqttHandler;
     @Autowired
     private DeviceMapper deviceMapper;
+    @Autowired
+    private ObjectMapper om;
 
     @Override
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public void receiveMessage(String message, @Header("mqtt_receivedTopic") String topic) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Device device = mapper.readValue(message, Device.class);
+        Device device = om.readValue(message, Device.class);
         Device query = deviceMapper.getByDeviceId(device.getDeviceId());
         if (query == null) {
             deviceMapper.addDevice(device);
