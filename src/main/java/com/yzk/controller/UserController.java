@@ -4,23 +4,30 @@ import com.yzk.domain.R;
 import com.yzk.domain.User;
 import com.yzk.service.UserService;
 import com.yzk.util.LocalStorage;
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
     private LocalStorage localStorage;
+    @Autowired
+    private RememberMeServices rememberMeServices;
 
     @GetMapping
     public R getAll() {
@@ -33,30 +40,25 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public R login(@RequestBody User u, HttpSession session, HttpServletResponse response) {
+    public R login(@RequestBody User u, HttpServletRequest request, HttpServletResponse response) {
         HashMap<String, Long> loginAttemptMap = localStorage.getLoginAttemptMap();
-        User user = userService.login(u);
-        if (user == null) {
+        try {
+            request.login(u.getUsername(), u.getPassword());
+        } catch (ServletException e) {
+            log.error(e.getMessage());
             updateMap(loginAttemptMap, u.getUsername(), 1L);
             return new R("用户名或密码不正确");
         }
-        session.setAttribute("user", user);
-        Cookie cookie = new Cookie("token", UUID.randomUUID().toString().replaceAll("-", ""));
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 30);
-        localStorage.getLoginCookieMap().put(user.getUsername(), cookie);
-        response.addCookie(cookie);
-        return new R(true, user);
+        Authentication token = (Authentication) request.getUserPrincipal();
+        rememberMeServices.loginSuccess(request, response, token);
+        return new R(true);
     }
 
     @GetMapping("/logout")
-    public R logout(HttpSession session, HttpServletResponse response) {
-        User user = (User) session.getAttribute("user");
+    public R logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         session.invalidate();
-        Cookie cookie = new Cookie("token", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-        localStorage.getLoginCookieMap().remove(user.getUsername());
+        LogoutHandler handler = (LogoutHandler) rememberMeServices;
+        handler.logout(request, response, (Authentication) request.getUserPrincipal());
         return new R(true);
     }
 

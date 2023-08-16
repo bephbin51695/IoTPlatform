@@ -16,14 +16,14 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userMapper.getByPhone(username);
+        User user = userMapper.getByName(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getPhone())
+                .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles("ROLE_ADMIN")
+                .roles("ADMIN")
                 .build();
     }
 }

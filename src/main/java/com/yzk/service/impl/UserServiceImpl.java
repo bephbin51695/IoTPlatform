@@ -6,6 +6,7 @@ import com.yzk.domain.User;
 import com.yzk.mapper.UserMapper;
 import com.yzk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +16,16 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public User login(User user) {
-        return userMapper.getByUsernameAndPassword(user);
+        User find = userMapper.getByName(user.getUsername());
+        if (encoder.matches(user.getPassword(), find.getPassword())) {
+            return find;
+        }
+        return null;
     }
 
     @Override
@@ -26,6 +33,7 @@ public class UserServiceImpl implements UserService {
         if (userMapper.getCount(user) > 0) {
             return false;
         }
+        user.setPassword(encoder.encode(user.getPassword()));
         return userMapper.addUser(user) > 0;
     }
 
