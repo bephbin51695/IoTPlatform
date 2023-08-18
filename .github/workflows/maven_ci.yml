@@ -27,8 +27,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      - name: Build & Package with Maven
+        run: mvn -B deploy --file pom.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Directory
         run: mkdir staging && cp target/*.jar staging
       - name: Upload Artifact
