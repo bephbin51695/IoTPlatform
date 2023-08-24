@@ -28,7 +28,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build & Package with Maven
-        run: mvn -B deploy --file pom.xml
+        run: mvn -B package -Ppro --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Directory
