@@ -53,17 +53,17 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-                        `id` int NOT NULL AUTO_INCREMENT,
-                        `username` varchar(20) NOT NULL,
-                        `password` varchar(40) NOT NULL,
-                        `email` varchar(40) DEFAULT NULL,
-                        `phone` char(11) DEFAULT NULL,
-                        `nickname` varchar(40) DEFAULT NULL,
-                        `create_time` datetime DEFAULT now(),
-                        `update_time` datetime DEFAULT NULL,
-                        PRIMARY KEY (`id`),
-                        UNIQUE KEY `username` (`username`)
+CREATE TABLE `user`(
+                       `id`          int          NOT NULL AUTO_INCREMENT,
+                       `username`    varchar(20)  NOT NULL,
+                       `password`    varchar(100) NOT NULL,
+                       `email`       varchar(40) DEFAULT NULL,
+                       `phone`       char(11)    DEFAULT NULL,
+                       `nickname`    varchar(40) DEFAULT NULL,
+                       `create_time` datetime    DEFAULT now(),
+                       `update_time` datetime    DEFAULT NULL,
+                       PRIMARY KEY (`id`),
+                       UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
