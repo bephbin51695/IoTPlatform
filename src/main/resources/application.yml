@@ -18,8 +18,12 @@ mqtt:
     id: IoTPlatform
   default:
     topic: ssm/device/+
+login:
+  max-try: 3
+
 logging:
   file:
     name: logs/IoT.log
+
 server:
   port: 8081

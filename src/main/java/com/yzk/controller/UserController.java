@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -28,6 +29,8 @@ public class UserController {
     private LocalStorage localStorage;
     @Autowired
     private RememberMeServices rememberMeServices;
+    @Value("${login.max-try}")
+    private Long maxTry;
 
     @GetMapping
     public R getAll() {
@@ -42,6 +45,10 @@ public class UserController {
     @PostMapping("/login")
     public R login(@RequestBody User u, HttpServletRequest request, HttpServletResponse response) {
         HashMap<String, Long> loginAttemptMap = localStorage.getLoginAttemptMap();
+        if (loginAttemptMap.get(u.getUsername()) > maxTry) {
+            log.warn("用户{}超过最大尝试次数", u.getUsername());
+            return new R("用户名或密码不正确");
+        }
         try {
             request.login(u.getUsername(), u.getPassword());
         } catch (ServletException e) {
