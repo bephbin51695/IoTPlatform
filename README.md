@@ -1,3 +1,5 @@
+# DEPRECATED
+
 # IoT Platform - Java Backend
 
 ![license](https://img.shields.io/github/license/bephbin51695/IoTPlatform)
